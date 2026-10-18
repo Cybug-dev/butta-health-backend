@@ -1,5 +1,7 @@
 # Butta Health Backend
 
+**Before any task, read [AGENTS.md](AGENTS.md) (agent rules) and [WORKING.md](WORKING.md) (current task state), and keep WORKING.md updated as you work.**
+
 TypeScript/ESM Express + Prisma REST API backed by Postgres (Neon), deployed to Render via [render.yaml](render.yaml).
 
 ## Git workflow
