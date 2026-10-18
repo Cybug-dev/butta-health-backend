@@ -23,6 +23,7 @@ _None queued._
 
 ## Recently completed (keep last ~10)
 
+- 2026-10-18 — Register 409 now returns EMAIL_ALREADY_REGISTERED (frontend redirects to sign-in).
 - 2026-10-18 — Added AGENTS.md (agent rules) and WORKING.md (this log).
 - `889f031` feat(server): log resolved NODE_ENV and AI_PROVIDER at startup
 - `d2a7183` feat(ai): log underlying provider failure reasons server-side

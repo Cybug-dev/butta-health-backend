@@ -145,7 +145,7 @@ test('duplicate normalized email returns a safe conflict with no new cookie or a
   const response = await post('register', { ...registration, email: ` ${email.toUpperCase()} ` });
   assert.equal(response.status, 409);
   assert.deepEqual(await response.json(), {
-    success: false, error: { code: 'REGISTRATION_CONFLICT', message: 'Unable to register with these details.' },
+    success: false, error: { code: 'EMAIL_ALREADY_REGISTERED', message: 'An account with this email already exists.' },
   });
   assert.equal(response.headers.get('set-cookie'), null);
   assert.equal(await prisma.user.count({ where: { email } }), 1);

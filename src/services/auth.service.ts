@@ -22,7 +22,7 @@ export async function registerUser(input: RegisterInput) {
     });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-      throw new AuthError(409, 'REGISTRATION_CONFLICT', 'Unable to register with these details.');
+      throw new AuthError(409, 'EMAIL_ALREADY_REGISTERED', 'An account with this email already exists.');
     }
     throw error;
   }
