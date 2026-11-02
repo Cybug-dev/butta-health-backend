@@ -2,7 +2,7 @@
 
 Hand-off log between agent sessions. Rules for maintaining it are in [AGENTS.md](AGENTS.md) §6. Keep it short.
 
-_Last updated: 2026-10-18_
+_Last updated: 2026-11-02_
 
 ## In progress
 
@@ -23,6 +23,7 @@ _None queued._
 
 ## Recently completed (keep last ~10)
 
+- `5375cbf` fix(cors): allow deployed frontend origin.
 - 2026-10-18 — Register 409 now returns EMAIL_ALREADY_REGISTERED (frontend redirects to sign-in).
 - 2026-10-18 — Added AGENTS.md (agent rules) and WORKING.md (this log).
 - `889f031` feat(server): log resolved NODE_ENV and AI_PROVIDER at startup
