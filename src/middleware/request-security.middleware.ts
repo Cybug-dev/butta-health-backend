@@ -1,5 +1,5 @@
 import type { Request, RequestHandler } from 'express';
-import env from '../config/env.js';
+import { isAllowedOrigin } from '../config/allowed-origins.js';
 import { ApiError } from '../errors/api-error.js';
 
 export const preventSensitiveResponseCaching: RequestHandler = (_req, res, next) => {
@@ -9,7 +9,7 @@ export const preventSensitiveResponseCaching: RequestHandler = (_req, res, next)
 
 function assertTrustedOrigin(req: Request) {
   const origin = req.get('Origin');
-  if (origin !== undefined && origin !== env.CLIENT_URL) {
+  if (origin !== undefined && !isAllowedOrigin(origin)) {
     throw new ApiError(403, 'ORIGIN_NOT_ALLOWED', 'Request origin is not allowed.');
   }
 }

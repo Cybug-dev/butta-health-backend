@@ -1,13 +1,13 @@
 import type { RequestHandler } from 'express';
 import { rateLimit } from 'express-rate-limit';
-import env from '../config/env.js';
 import { AuthError } from '../auth/errors.js';
+import { isAllowedOrigin } from '../config/allowed-origins.js';
 
 export const authRequestSecurity: RequestHandler = (req, res, next) => {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'POST') {
     const origin = req.get('Origin');
-    if (origin !== undefined && origin !== env.CLIENT_URL) {
+    if (origin !== undefined && !isAllowedOrigin(origin)) {
       throw new AuthError(403, 'ORIGIN_NOT_ALLOWED', 'Request origin is not allowed.');
     }
     // Credential submissions require JSON; logout consumes no request body.

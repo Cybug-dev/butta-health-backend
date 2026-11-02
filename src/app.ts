@@ -16,6 +16,7 @@ import attachmentRoutes from './routes/attachment.routes.js';
 import { authRequestSecurity } from './middleware/auth-security.middleware.js';
 import { ApiError } from './errors/api-error.js';
 import docsRoutes from './routes/docs.routes.js';
+import { isAllowedOrigin } from './config/allowed-origins.js';
 
 const app = express();
 
@@ -28,13 +29,9 @@ if (env.NODE_ENV === 'production') {
 
 app.disable('x-powered-by');
 app.use(helmet());
-const allowedOrigins = new Set([
-  env.CLIENT_URL,
-  ...(env.NODE_ENV === 'production' ? ['https://butta-health.vercel.app'] : []),
-]);
 app.use(cors({
   origin(origin, callback) {
-    callback(null, origin !== undefined && allowedOrigins.has(origin));
+    callback(null, origin !== undefined && isAllowedOrigin(origin));
   },
   credentials: true,
 }));

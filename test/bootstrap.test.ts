@@ -109,6 +109,22 @@ test('CORS permits configured and deployed origins, including credentialed prefl
   }
 });
 
+test('auth writes accept the deployed frontend origin', async () => {
+  const response = await fetch(`${baseUrl}/api/auth/login`, {
+    method: 'POST',
+    headers: {
+      Origin: 'https://butta-health.vercel.app',
+      'Content-Type': 'application/json',
+    },
+    body: '{}',
+  });
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), {
+    success: false,
+    error: { code: 'VALIDATION_ERROR', message: 'Provide a valid email and password.' },
+  });
+});
+
 test('invalid JSON and oversized bodies produce safe client errors', async () => {
   for (const [body, status, code, message] of [
     ['{"private-health-input":', 400, 'INVALID_JSON', 'Request body must contain valid JSON.'],
