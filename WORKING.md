@@ -6,7 +6,11 @@ _Last updated: 2026-11-02_
 
 ## In progress
 
-_None._
+### Align API origin checks with production CORS
+- Goal: Allow the deployed frontend origin through protected API write middleware.
+- Files: `src/config/allowed-origins.ts`, CORS/security middleware, `test/bootstrap.test.ts`
+- [x] Use the shared production-only origin allowlist for CORS and protected write checks.
+- [x] Verify the deployed-origin preflight and login request pass the origin gate.
 
 <!-- Template:
 ### <task title>
