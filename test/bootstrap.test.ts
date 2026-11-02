@@ -91,14 +91,16 @@ test('Swagger documentation and local assets are public with security headers in
   assert.ok(!JSON.stringify(spec).includes(testEnv.JWT_SECRET));
 });
 
-test('CORS permits only the configured origin, including credentialed preflight', async () => {
-  const allowed = await fetch(`${baseUrl}/api/health`, {
-    method: 'OPTIONS',
-    headers: { Origin: testEnv.CLIENT_URL, 'Access-Control-Request-Method': 'GET' },
-  });
-  assert.equal(allowed.status, 204);
-  assert.equal(allowed.headers.get('access-control-allow-origin'), testEnv.CLIENT_URL);
-  assert.equal(allowed.headers.get('access-control-allow-credentials'), 'true');
+test('CORS permits configured and deployed origins, including credentialed preflight', async () => {
+  for (const origin of [testEnv.CLIENT_URL, 'https://butta-health.vercel.app']) {
+    const allowed = await fetch(`${baseUrl}/api/health`, {
+      method: 'OPTIONS',
+      headers: { Origin: origin, 'Access-Control-Request-Method': 'GET' },
+    });
+    assert.equal(allowed.status, 204);
+    assert.equal(allowed.headers.get('access-control-allow-origin'), origin);
+    assert.equal(allowed.headers.get('access-control-allow-credentials'), 'true');
+  }
 
   for (const origin of ['https://untrusted.example', 'http://localhost:5173.evil.example', 'null']) {
     const response = await fetch(`${baseUrl}/api/health`, { headers: { Origin: origin } });

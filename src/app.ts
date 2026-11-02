@@ -28,9 +28,13 @@ if (env.NODE_ENV === 'production') {
 
 app.disable('x-powered-by');
 app.use(helmet());
+const allowedOrigins = new Set([
+  env.CLIENT_URL,
+  ...(env.NODE_ENV === 'production' ? ['https://butta-health.vercel.app'] : []),
+]);
 app.use(cors({
   origin(origin, callback) {
-    callback(null, origin === env.CLIENT_URL);
+    callback(null, origin !== undefined && allowedOrigins.has(origin));
   },
   credentials: true,
 }));
